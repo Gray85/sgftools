@@ -110,110 +110,20 @@ class Game:
 class GameInfo:
     def __init__(self):
         self._info = dict()
-
-    @property
-    def author(self):
-        return self._info.get('AN')
-
-    @author.setter
-    def author(self, author):
-        self._info['AN'] = author
-
-    @property
-    def black_rank(self):
-        return self._info.get('BR')
-
-    @black_rank.setter
-    def black_rank(self, rank):
-        self._info['BR'] = rank
-
-    @property
-    def black_team(self):
-        return self._info.get('BT')
-
-    @black_team.setter
-    def black_team(self, team):
-        self._info['BT'] = team
-
-    @property
-    def black_player(self):
-        return self._info.get('PB')
-
-    @black_player.setter
-    def black_player(self, name):
-        self._info['PB'] = name
-
-    @property
-    def white_rank(self):
-        return self._info.get('WR')
-
-    @white_rank.setter
-    def white_rank(self, rank):
-        self._info['WR'] = rank
-
-    @property
-    def white_team(self):
-        return self._info.get('WT')
-
-    @white_team.setter
-    def white_team(self, team):
-        self._info['WT'] = team
-
-    @property
-    def white_player(self):
-        return self._info.get('PW')
-
-    @white_player.setter
-    def white_player(self, name):
-        self._info['PW'] = name
-
-    @property
-    def copyright(self):
-        return self._info.get('CP')
-
-    @copyright.setter
-    def copyright(self, copyright):
-        self._info['CP'] = copyright
-
-    @property
-    def date(self):
-        return self._info.get['DT']
-
-    @date.setter
-    def date(self, date):
-        self._info['DT'] = date
-
-    @property
-    def event(self):
-        return self._info.get('EV')
-
-    @event.setter
-    def event(self, event):
-        self._info['EV'] = event
-
-    @property
-    def gamename(self):
-        return self._info.get('GN')
-
-    @gamename.setter
-    def gamename(self, name):
-        self._info['GN'] = name
-
-    @property
-    def result(self):
-        return self._info.get('RE')
-
-    @result.setter
-    def result(self, result):
-        self._info['RE'] = result
-
-    @property
-    def round(self):
-        return self._info.get('RO')
-
-    @round.setter
-    def round(self, round):
-        self._info['RO'] = round
+        self.author = ''
+        self.black_player = ''
+        self.black_rank = ''
+        self.black_team = ''
+        self.white_player = ''
+        self.white_rank = ''
+        self.white_team = ''
+        self.copyright = ''
+        self.date = ''
+        self.event = ''
+        self.game_name = ''
+        self.result = ''
+        self.round = ''
+        self.game_comment = ''
 
     @property
     def board_size(self):
@@ -250,7 +160,7 @@ class GameNode:
         self.comment = ''
         self.annotation = None
         self._markups = set()
-        self.nextnodes = []
+        self.next_nodes = []
 
     @property
     def markups(self):
@@ -261,10 +171,10 @@ class GameNode:
         self._markups = set(marks)
 
     @property
-    def nextnode(self):
-        if len(self.nextnodes) == 0:
+    def next_node(self):
+        if len(self.next_nodes) == 0:
             return None
-        return self.nextnodes[0]
+        return self.next_nodes[0]
 
     def __setitem__(self, key, value):
         self.extra[key] = value
