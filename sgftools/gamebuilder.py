@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 from sgftools.game import Circle, Triangle, Square, Cross, Label, GoodForBlack, GoodForWhite, PositionIsUnclear, \
-    PositionIsEven, Game, GameNode
+    PositionIsEven, Game, GameNode, Point, Stone, Move
 
 
 class UnsupportedGameException(Exception):
@@ -70,8 +70,9 @@ class GameBuilder:
             "SZ": int,
             'GM': lambda x: self.check_game_number(x),
             # x: list
-            'W': lambda x: ('W', self.parse_coordinate(x[0])),
-            'B': lambda x: ('B', self.parse_coordinate(x[0])),
+            'W': lambda x: Move(Stone.White, self.parse_coordinate(x[0])),
+            'B': lambda x: Move(Stone.Black, self.parse_coordinate(x[0])),
+            'PL': lambda x: self.parse_stone(x[0]),
             'AB': self.parse_coordinates,
             'AW': self.parse_coordinates,
             'AE': self.parse_coordinates,
@@ -82,6 +83,16 @@ class GameBuilder:
             'DM': lambda x: PositionIsEven(),
             'MARK': lambda x: list(self.parse_markups(x))
         }
+
+    @staticmethod
+    def parse_stone(param):
+        if param == 'W':
+            return Stone.White
+
+        if param == 'B':
+            return Stone.Black
+
+        raise NotImplemented()
 
     def parse_markups(self, markslist):
         for marks in markslist:
@@ -94,18 +105,19 @@ class GameBuilder:
         result = []
         for xy in xylist:
             xydata = xy.split(":")
-            if (len(xydata) == 1):
+            if len(xydata) == 1:
                 result.append(self.parse_coordinate(xydata[0]))
             else:
                 upperleft = self.parse_coordinate(xydata[0])
                 bottomright = self.parse_coordinate(xydata[1])
-                for x in range(upperleft[0], bottomright[0] + 1):
-                    for y in range(upperleft[1], bottomright[1] + 1):
-                        result.append((x, y))
+                for x in range(upperleft.x, bottomright.x + 1):
+                    for y in range(upperleft.y, bottomright.y + 1):
+                        result.append(Point(x, y))
 
-        return result;
+        return result
 
-    def parse_coordinate(self, xy):
+    @staticmethod
+    def parse_coordinate(xy):
         if xy == '':
             return None
         if xy == 'tt':  # специальный случай
@@ -113,15 +125,16 @@ class GameBuilder:
 
         x = ord(xy[0]) - ord('a') + 1
         y = ord(xy[1]) - ord('a') + 1
-        return (x, y)
+        return Point(x, y)
 
-    def check_game_number(self, no):
+    @staticmethod
+    def check_game_number(no):
         if no != '1':
             raise UnsupportedGameException(no)
         else:
             return no
 
-    def Build(self, tokenlist):
+    def build(self, tokenlist):
         game = Game()
         self._fill_game_info(game.game_info, tokenlist[0])
         tokenlist[0] = [x for x in tokenlist[0] if x[0] not in self._only_root_properties]
@@ -143,7 +156,8 @@ class GameBuilder:
         gamenode.next_nodes = self.load_game_nodes(nodes[1:])
         return [gamenode]
 
-    def group_by_key(self, properties):
+    @staticmethod
+    def group_by_key(properties):
         keyvalues = defaultdict(list)
         for prop in properties:
             keyvalues[prop[0]].extend(prop[1:])

@@ -66,7 +66,7 @@ class SgfParser:
 
     def load_game_from_string(self, string):
         tokens = self.tokenParser.parseString(string)
-        return GameBuilder().Build(tokens)
+        return GameBuilder().build(tokens)
 
     def load_game(self, filename):
         encoding = self.extract_encoding(filename)

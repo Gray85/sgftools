@@ -1,3 +1,5 @@
+from enum import Enum
+
 
 class GameAnnotation:
     def __init__(self):
@@ -100,6 +102,63 @@ class Label(Markup):
         return hash(self.label)
 
 
+class Stone(Enum):
+
+    def __str__(self):
+        return self._name_
+
+    White = 1
+    Black = 2
+
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __eq__(self, other):
+        if other is None:
+            return False
+
+        if not isinstance(other, type(self)):
+            return False
+
+        return self.x == other.x and self.y == other.y
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __str__(self):
+        return "(x:{}, y:{})".format(self.x, self.y)
+
+    def __hash__(self):
+        return (self.x << 8) + self.y
+
+
+class Move:
+    def __init__(self, stone, point):
+        self.stone = stone
+        self.point = point
+
+    def __str__(self):
+        return "{}: {}".format(self.stone, self.point)
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __eq__(self, other):
+        if other is None:
+            return False
+
+        if not isinstance(other, type(self)):
+            return False
+
+        return self.point == other.point and self.stone == other.stone
+
+
 class Game:
     def __init__(self):
         self.game_info = GameInfo()
@@ -188,7 +247,7 @@ class GameNode:
     def __str__(self):
         info = []
         if self.move is not None:
-            info.append("{}: {}".format(self.move[0], self.move[1]))
+            info.append("{}".format(self.move))
 
         if len(self.add_black) != 0:
             info.append("Add black: {}".format(self.add_black))
