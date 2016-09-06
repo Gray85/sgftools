@@ -32,7 +32,6 @@ class GameBuilderTest(unittest.TestCase):
         self.assertEqual(expected, root)
         self.assertEqual(expectedblack, root.next_node)
 
-
     def test_load_gamenode_move(self):
         expectedwhite = GameNode()
         expectedwhite.move = Move(Stone.White, Point(3, 4))

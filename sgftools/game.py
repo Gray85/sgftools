@@ -160,8 +160,9 @@ class Move:
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, board_size=19):
         self.game_info = GameInfo()
+        self.game_info.board_size = board_size
         self.root = None
 
 
@@ -234,6 +235,9 @@ class GameNode:
         if len(self.next_nodes) == 0:
             return None
         return self.next_nodes[0]
+
+    def add_next_node(self, next_node):
+        self.next_nodes.append(next_node)
 
     def __setitem__(self, key, value):
         self.extra[key] = value

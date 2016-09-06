@@ -1,5 +1,6 @@
 import unittest
 
+from sgftools.DiagramGenerators.ProblemsBookGenerator import ProblemsBookGenerator
 from sgftools.board import Board
 from sgftools.parser import SgfParser
 
@@ -30,4 +31,20 @@ class IntegrationTests(unittest.TestCase):
             .white(4, 1).white(5, 1).white(6, 1).black(7, 1).white(9, 1)
 
         self.assertEqual(expected_board, board)
+
+    def test_simple_problem_book_9x9(self):
+        parser = SgfParser()
+        game = parser.load_game('testdata/problems9x9.sgf')
+
+        board1 = Board(9).white(5, 1).white(7, 1).white(3, 2)
+        board2 = Board(9).white(5, 1).white(7, 1).white(3, 1)
+        board3 = Board(9).white(3, 1).white(5, 1).white(3, 2)
+        board4 = Board(9).white(1, 1).white(2, 2).white(3, 1)
+
+        expected_boards = [board1, board2, board3, board4]
+
+        generator = ProblemsBookGenerator()
+
+        actual = [x for x in generator.generate(game)]
+        self.assertEqual(expected_boards, actual)
 
