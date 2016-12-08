@@ -49,7 +49,7 @@ class TestSgfParser(unittest.TestCase):
              ]
         ]
         parser = SgfPyParser()
-        actual = parser.parseString(sgf)
+        actual = parser.parse_string(sgf)
 
         self.assertSequenceEqual(expected, actual)
 

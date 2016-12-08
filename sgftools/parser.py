@@ -6,13 +6,13 @@ from pyparsing import OneOrMore, Word, QuotedString, Group, TokenConverter, Forw
 from sgftools.gamebuilder import GameBuilder
 
 
-def _deepToList(alist):
+def _deep_to_list(alist):
     if isinstance(alist, str):
         return alist
 
     try:
         lst = list(alist)
-        return [_deepToList(i) for i in alist]
+        return [_deep_to_list(i) for i in alist]
     except TypeError:
         return alist
 
@@ -34,11 +34,11 @@ class SgfPyParser:
     def __init__(self):
         self._parser = self._game_tree_parser()
 
-    def parseFile(self, fileNameOrFile):
-        return _deepToList(self._parser.parseFile(fileNameOrFile))
+    def parse_file(self, fileNameOrFile):
+        return _deep_to_list(self._parser.parseFile(fileNameOrFile))
 
-    def parseString(self, string):
-        return _deepToList(self._parser.parseString(string))
+    def parse_string(self, string):
+        return _deep_to_list(self._parser.parseString(string))
 
     def _game_tree_parser(self):
         lparen = Literal('(').suppress()
@@ -65,7 +65,7 @@ class SgfParser:
         self.tokenParser = SgfPyParser()
 
     def load_game_from_string(self, string):
-        tokens = self.tokenParser.parseString(string)
+        tokens = self.tokenParser.parse_string(string)
         return GameBuilder().build(tokens)
 
     def load_game(self, filename):

@@ -1,6 +1,6 @@
 import itertools
 
-from sgftools.game import Point, Stone
+from sgftools.game import Point, Stone, Label
 
 
 class ImpossibleMove(Exception):
@@ -60,16 +60,22 @@ class Board:
         self._grid = dict()
         self.comment = ''
 
-    def black(self, x, y):
-        node = self[x, y]
-        node.stone = Stone.Black
-        self[x, y] = node
-        return self
+    @property
+    def size(self):
+        return self._size
 
-    def white(self, x, y):
+    def black(self, x, y, label=None):
+        return self._node(x, y, Stone.Black, label)
+
+    def white(self, x, y, label=None):
+        return self._node(x, y, Stone.White, label)
+
+    def _node(self, x, y, color, label):
         node = self[x, y]
-        node.stone = Stone.White
+        node.stone = color
         self[x, y] = node
+        if label is not None:
+            node.marker = Label(label)
         return self
 
     def apply(self, game_node):
@@ -159,7 +165,7 @@ class Board:
             point = Point(*pos)
 
         if self.out_of_board(point):
-            raise IndexError()
+            raise IndexError("point {} out of board. Board size: {}".format(point, self.size))
 
         self._grid[point] = value
 
@@ -170,7 +176,7 @@ class Board:
             point = Point(*pos)
 
         if self.out_of_board(point):
-            raise IndexError()
+            raise IndexError("point {} out of board. Board size: {}".format(point, self.size))
 
         return self._grid.get(point, Node())
 
@@ -187,7 +193,7 @@ class Board:
         if not isinstance(other, type(self)):
             return False
 
-        return other._size == self._size and \
+        return other.size == self._size and \
                other.name == self.name and \
                other.comment == self.comment and \
                self._grid_eq(other)
