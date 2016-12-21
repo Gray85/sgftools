@@ -1,5 +1,5 @@
 import unittest
-from pyparsing import OneOrMore, Word, QuotedString,Group, TokenConverter, Forward, Literal, ZeroOrMore
+from pyparsing import OneOrMore, Word, QuotedString, TokenConverter
 import string
 
 def tolist(s, l, t):

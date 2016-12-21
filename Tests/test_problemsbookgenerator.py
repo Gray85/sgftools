@@ -1,6 +1,6 @@
 import unittest
 
-from sgftools.DiagramGenerators.ProblemsBookGenerator import ProblemsBookGenerator
+from sgftools.diagramgenerators import ProblemsBookGenerator
 from sgftools.board import Board
 from sgftools.game import GameNode, Point, Game, GameInfo
 

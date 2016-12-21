@@ -4,19 +4,19 @@ sys.path.append("..")
 
 import argparse
 
-import sgftools.DiagramGenerators.ProblemsBookGenerator
+import sgftools.diagramgenerators
 import sgftools.parser
-import sgftools.ProblemsPdfBuilder
+import sgftools.problemspdfbuilder
 
 
 def generate_problems(args):
     sgf_parser = sgftools.parser.SgfParser()
     game = sgf_parser.load_game(args.input)
 
-    generator = sgftools.DiagramGenerators.ProblemsBookGenerator.ProblemsBookGenerator()
+    generator = sgftools.diagramgenerators.ProblemsBookGenerator()
     tasks = generator.generate(game)
 
-    generator = sgftools.ProblemsPdfBuilder.ProblemsPdfBuilder(trim_board=args.trim_board)
+    generator = sgftools.problemspdfbuilder.ProblemsPdfBuilder(trim_board=args.trim_board)
     generator.add_diagrams(tasks)
     generator.save(args.output)
 

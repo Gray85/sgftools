@@ -65,18 +65,16 @@ class Board:
     def size(self):
         return self._size
 
-    def black(self, x, y, label=None):
-        return self._node(x, y, Stone.Black, label)
+    def black(self, x, y):
+        return self._node(x, y, Stone.Black)
 
-    def white(self, x, y, label=None):
-        return self._node(x, y, Stone.White, label)
+    def white(self, x, y):
+        return self._node(x, y, Stone.White)
 
-    def _node(self, x, y, color, label):
+    def _node(self, x, y, color):
         node = self[x, y]
         node.stone = color
         self[x, y] = node
-        if label is not None:
-            node.marker = Label(label)
         return self
 
     def apply(self, game_node):
