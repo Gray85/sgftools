@@ -1,3 +1,4 @@
+
 import itertools
 
 from sgftools.game import Point, Stone, Label

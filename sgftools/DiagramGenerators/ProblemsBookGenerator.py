@@ -12,4 +12,4 @@ class ProblemsBookGenerator(object):
             board = Board(size)
             board.apply(node)
             yield board
-        return []
+

@@ -1,6 +1,6 @@
 import unittest
 
-from sgftools.ProblemsPdfWriter import ProblemsPdfWriter
+from sgftools.ProblemsPdfBuilder import ProblemsPdfBuilder
 from sgftools.board import Board
 
 
@@ -23,6 +23,6 @@ class ProblemsPdfWriterTest(unittest.TestCase):
             .white(1, 13) \
             .white(13, 1)
 
-        generator = ProblemsPdfWriter(trim_board=True)
+        generator = ProblemsPdfBuilder(trim_board=True)
         generator.add_diagrams([board, board13, board, board13, board, board, board, board])
         generator.save('output.pdf')

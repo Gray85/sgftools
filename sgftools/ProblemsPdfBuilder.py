@@ -3,7 +3,7 @@ from fpdf import FPDF
 from sgftools.game import Stone, Label
 
 
-class ProblemsPdfWriter:
+class ProblemsPdfBuilder:
     @property
     def working_width(self):
         return self._pdf.w - 2 * self.margin
@@ -88,17 +88,19 @@ class ProblemsPdfWriter:
         board_line_height = cell_size * (last_line_to_draw - 1 + coeff)
         board_height = board_line_height + cell_size * (0 if (last_line_to_draw < board.size) else 0.5)
         self._ensure_height(board_height + (self.caption_height if self.draw_diagram_caption else 0))
+        pos_y = self._curr_y
+        pos_x = self._curr_x
 
         # draw grid
         for i in range(0, board.size):
             step_size = i * cell_size
-            pdf.line(self._curr_x + step_size, self._curr_y, self._curr_x + step_size,
-                     self._curr_y + board_line_height)
+            pdf.line(pos_x + step_size, pos_y, pos_x + step_size,
+                     pos_y + board_line_height)
 
         for i in range(0, last_line_to_draw):
             step_size = i * cell_size
-            pdf.line(self._curr_x, self._curr_y + step_size, self._curr_x + cell_size * (board.size - 1),
-                     self._curr_y + step_size)
+            pdf.line(pos_x, pos_y + step_size, pos_x + cell_size * (board.size - 1),
+                     pos_y + step_size)
 
         # draw nodes
         for x in range(1, board.size + 1):
@@ -107,8 +109,8 @@ class ProblemsPdfWriter:
                 if node.is_empty():
                     continue
 
-                myx = self._curr_x + (x - 1) * cell_size
-                myy = self._curr_y + (y - 1) * cell_size
+                myx = pos_x + (x - 1) * cell_size
+                myy = pos_y + (y - 1) * cell_size
                 self.draw_node(myx, myy, cell_size, node, pdf)
 
         self._move_y(board_height)
