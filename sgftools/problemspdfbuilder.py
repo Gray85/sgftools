@@ -25,7 +25,6 @@ class ProblemsPdfBuilder:
         self.trim_board = trim_board
         self.draw_diagram_caption = draw_diagram_caption
         self.caption_height = 6
-        self.problem_num = 1
 
         self._curr_x = self.margin
         self._curr_y = self.margin
@@ -38,7 +37,6 @@ class ProblemsPdfBuilder:
         for board in boards:
             self.draw_board(board, self._pdf)
             self._move_y(self.board_indent)
-            self.problem_num += 1
 
     def save(self, output_file_name):
         self._pdf.output(output_file_name, 'F')
@@ -81,13 +79,12 @@ class ProblemsPdfBuilder:
         pdf.set_draw_color(0)
         cell_size = self.board_width / board.size
 
-        self._move_y(cell_size/2)
-
         last_line_to_draw = self._get_last_line_to_draw(board)
         coeff = 0.6 if (last_line_to_draw < board.size) else 0
         board_line_height = cell_size * (last_line_to_draw - 1 + coeff)
         board_height = board_line_height + cell_size * (0 if (last_line_to_draw < board.size) else 0.5)
-        self._ensure_height(board_height + (self.caption_height if self.draw_diagram_caption else 0))
+        self._ensure_height(board_height + cell_size / 2 + (self.caption_height if self.draw_diagram_caption else 0))
+        self._move_y(cell_size / 2)
         pos_y = self._curr_y
         pos_x = self._curr_x
 
@@ -115,7 +112,7 @@ class ProblemsPdfBuilder:
 
         self._move_y(board_height)
         if self.draw_diagram_caption:
-            self._draw_caption(pdf)
+            self._draw_caption(pdf, board.name)
 
     def draw_node(self, myx, myy, cell_size, node, pdf):
         radius = cell_size / 2 - 0.05
@@ -137,10 +134,10 @@ class ProblemsPdfBuilder:
                 pdf.set_xy(myx - cell_size/2, myy - cell_size/2)
                 pdf.cell(cell_size, cell_size, text, 0, 0, 'C')
 
-    def _draw_caption(self, pdf):
+    def _draw_caption(self, pdf, title):
         pdf.set_font(self.font_name, '', self.font_size)
         pdf.set_text_color(0)
         pdf.set_xy(self._curr_x, self._curr_y)
 
-        pdf.cell(self.board_width, self.caption_height, "Problem {}".format(self.problem_num), 0, 0, 'C')
+        pdf.cell(self.board_width, self.caption_height, title, 0, 0, 'C')
         self._move_y(self.caption_height)

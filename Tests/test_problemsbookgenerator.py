@@ -31,11 +31,15 @@ class ProblemsBookGeneratorTest(unittest.TestCase):
         board2 = Board(13).white(3, 3).black(5, 5)
         board3 = Board(13).black(11, 11)
 
+        board1.name = "Problem 1"
+        board2.name = "Problem 2"
+        board3.name = "Problem 3"
+
         expected = [board1, board2, board3]
 
         generator = ProblemsBookGenerator()
 
-        actual = [x for x in generator.generate(game)]
+        actual = [x for x in generator.generate(game, title="Problem")]
         self.assertEqual(expected, actual)
 
 

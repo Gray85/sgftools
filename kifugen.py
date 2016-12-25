@@ -1,7 +1,4 @@
 #!/usr/bin/python3
-import sys
-sys.path.append("..")
-
 import argparse
 
 import sgftools.diagramgenerators
@@ -14,7 +11,7 @@ def generate_problems(args):
     game = sgf_parser.load_game(args.input)
 
     generator = sgftools.diagramgenerators.ProblemsBookGenerator()
-    tasks = generator.generate(game)
+    tasks = generator.generate(game, title="Problem")
 
     generator = sgftools.problemspdfbuilder.ProblemsPdfBuilder(trim_board=args.trim_board)
     generator.add_diagrams(tasks)
