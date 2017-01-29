@@ -24,7 +24,7 @@ class GameBuilder:
                                      'OW', 'TE', 'W', 'WL', 'AB', 'AE', 'AW', 'PL', 'AR', 'C', 'CR', 'DD', 'DM',
                                      'FG', 'GB', 'GW', 'HO', 'LB', 'LN', 'MA', 'N', 'PM', 'SQ', 'TR', 'UC', 'V', 'VW']
 
-        self.markconstructors = {
+        self._mark_constructors = {
             'CR': Circle,
             'TR': Triangle,
             'SQ': Square,
@@ -96,7 +96,7 @@ class GameBuilder:
 
     def parse_markups(self, markslist):
         for marks in markslist:
-            mark = self.markconstructors[marks[0]]
+            mark = self._mark_constructors[marks[0]]
             for point in marks[1:]:
                 data = point.split(':')
                 yield ((mark(*data[1:])), self.parse_coordinate(data[0]))

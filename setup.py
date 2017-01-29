@@ -18,6 +18,7 @@ setup(
         'Topic :: Games/Entertainment :: Board Games',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
 
     ],
     keywords="go game baduk weiqi kifu",

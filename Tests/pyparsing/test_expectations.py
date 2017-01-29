@@ -26,22 +26,22 @@ class pyparsingexpectations(unittest.TestCase):
 
     def test_simple_example(self):
         aProperty = self.get_aproperty()
-        result = aProperty.parse_string("AW[ab]\r\n[bc][]")
+        result = aProperty.parseString("AW[ab]\r\n[bc][]")
         self.assertEqual(['AW', 'ab', 'bc', ''], list(result))
 
     def test_escapes(self):
         aProperty = self.get_aproperty()
-        result = aProperty.parse_string("AW[a\]b]\r\n[b\\\\c][]")
+        result = aProperty.parseString("AW[a\]b]\r\n[b\\\\c][]")
         self.assertSequenceEqual(['AW', 'a]b', 'b\\c', ''], result)
 
     def test_tokenconverter_override(self):
         aProperty = OneOrMore(ByList(self.get_aproperty()))
         result = aProperty.parseString("AW[ab]AB[dd]")
-        self.assertEqual([['AW', 'ab'],['AB', 'dd']], list(result))
+        self.assertEqual([['AW', 'ab'], ['AB', 'dd']], list(result))
 
     def test_parse_action(self):
         parser = OneOrMore(Word('ab')).setParseAction(tolist)
-        actual = parser.parse_string('a b a')
+        actual = parser.parseString('a b a')
         self.assertSequenceEqual(['a', 'b', 'a', '!'], actual)
 
 if __name__ == '__main__':
