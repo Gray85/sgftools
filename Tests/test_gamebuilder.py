@@ -144,6 +144,7 @@ class GameBuilderTest(unittest.TestCase):
         info.board_size = 19
         info.game_name = 'impossible'
         info.game_comment = u'только для тестирования'
+        info.place = 'World'
         info['KM'] = '0.00'
         info['ST'] = '2'
         info['GM'] = '1'

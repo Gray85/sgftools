@@ -48,6 +48,7 @@ class GameBuilder:
             'GN': 'game_name',
             'RE': 'result',
             'CP': 'copyright',
+            'PC': 'place',
             'W': 'move',
             'B': 'move',
             'C': 'comment',

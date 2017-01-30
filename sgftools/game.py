@@ -184,6 +184,7 @@ class GameInfo:
         self.result = ''
         self.round = ''
         self.game_comment = ''
+        self.place = ''
 
     @property
     def board_size(self):
@@ -194,14 +195,33 @@ class GameInfo:
         self._info['SZ'] = size
 
     def __getitem__(self, key):
-        return self._info[key]
+        if key in self._info:
+            return self._info[key]
+        return None
 
     def __setitem__(self, key, value):
         self._info[key] = value
 
     def __eq__(self, other):
-        return (isinstance(other, self.__class__) and
-                self._info == other._info)
+        if not isinstance(other, self.__class__):
+            return False
+
+        return self._info == other._info and \
+            self.place == other.place and \
+            self.date == other.date and \
+            self.author == other.author and \
+            self.black_player == other.black_player and \
+            self.black_rank == other.black_rank and \
+            self.black_team == other.black_team and \
+            self.copyright == other.copyright and \
+            self.event == other.event and \
+            self.game_comment == other.game_comment and \
+            self.game_name == other.game_name and \
+            self.result == other.result and \
+            self.round == other.round and \
+            self.white_player == other.white_player and \
+            self.white_rank == other.white_rank and \
+            self.white_team == other.white_team
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -243,7 +263,9 @@ class GameNode:
         self.extra[key] = value
 
     def __getitem__(self, key):
-        return self.extra.get(key)
+        if key in self.extra:
+            return self.extra.get(key)
+        return None
 
     def __repr__(self):
         return self.__str__()
