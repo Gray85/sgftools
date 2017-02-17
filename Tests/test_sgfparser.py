@@ -9,7 +9,7 @@ class TestSgfParser(unittest.TestCase):
 
     def test_wrong_value_in_node(self):
         # для тех вершин, где нужны конкретные значения
-        raise NotImplemented('тест не реализован')
+        raise NotImplementedError('тест не реализован')
 
     def test_error_in_parsing(self):
         """ Обработка неверного файла """

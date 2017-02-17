@@ -163,7 +163,10 @@ class BufferedReader:
         if self._buffer_index >= len(self._buffer):
             return b""
 
-        result = self._buffer[self._buffer_index:min(self._buffer_index + count, len(self._buffer))]
-        self._buffer_index += count;
+        to_read = count
+        if to_read < 0:
+            to_read = len(self._buffer) - self._buffer_index
+        result = self._buffer[self._buffer_index:min(self._buffer_index + to_read, len(self._buffer))]
+        self._buffer_index += to_read
         return result
 
