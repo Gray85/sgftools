@@ -2,7 +2,7 @@
 import codecs
 import string
 
-from pyparsing import OneOrMore, Word, QuotedString, Group, TokenConverter, Forward, Literal, ZeroOrMore
+from pyparsing import OneOrMore, Word, QuotedString, Group, TokenConverter, Forward, Literal, ZeroOrMore, ParseBaseException
 from sgftools.gamebuilder import GameBuilder
 
 
@@ -35,10 +35,19 @@ class SgfPyParser:
         self._parser = self._game_tree_parser()
 
     def parse_file(self, file_name_or_file):
-        return _deep_to_list(self._parser.parseFile(file_name_or_file))
+        try:
+            return _deep_to_list(self._parser.parseFile(file_name_or_file))
+        except ParseBaseException as ex:
+            raise ValueError(ex)
 
     def parse_string(self, string):
-        return _deep_to_list(self._parser.parseString(string))
+        if not isinstance(string, str):
+            raise TypeError("'string' must be str type")
+
+        try:
+            return _deep_to_list(self._parser.parseString(string))
+        except ParseBaseException as ex:
+            raise ValueError(ex)
 
     def _game_tree_parser(self):
         lparen = Literal('(').suppress()

@@ -9,11 +9,14 @@ class TestSgfParser(unittest.TestCase):
 
     def test_wrong_value_in_node(self):
         # для тех вершин, где нужны конкретные значения
-        self.assertFalse(True, 'тест не реализован')
+        raise NotImplemented('тест не реализован')
 
     def test_error_in_parsing(self):
-        # обработка ошибок в файле
-        self.assertFalse(True, 'тест не реализован')
+        """ Обработка неверного файла """
+        parser = SgfParser()
+        sgf = "This is not sgf"
+        with self.assertRaises(ValueError):
+            parser.load_game_from_string(sgf)
 
     def test_read_cp1251_encoding(self):
         parser = SgfParser()
