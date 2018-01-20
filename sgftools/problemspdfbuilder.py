@@ -1,5 +1,6 @@
 from fpdf import FPDF
 
+from sgftools.board import Board
 from sgftools.game import Stone, Label
 
 
@@ -74,7 +75,7 @@ class ProblemsPdfBuilder:
                 return y
         return 1
 
-    def draw_board(self, board, pdf):
+    def draw_board(self, board: Board, pdf):
         pdf.set_font(self.font_name, '', self.label_font_size)
         pdf.set_draw_color(0)
         cell_size = self.board_width / board.size

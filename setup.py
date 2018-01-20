@@ -17,12 +17,11 @@ setup(
         'Intended Audience :: End Users/Desktop',
         'Topic :: Games/Entertainment :: Board Games',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
 
     ],
     keywords="go game baduk weiqi kifu",
     packages=["sgftools"],
     py_modules=["kifugen"],
-    install_requires=["FPDF >=1.7.2", "pyparsing >=2.0.7"]
+    install_requires=["FPDF >=1.7.2", "pyparsing >=2.0.7", "svgwrite"]
 )

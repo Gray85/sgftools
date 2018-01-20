@@ -82,7 +82,7 @@ class Triangle(Markup):
 
 
 class Label(Markup):
-    def __init__(self, string):
+    def __init__(self, string: str):
         super(Label, self).__init__()
         self.label = string
 
