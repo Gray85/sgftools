@@ -17,6 +17,7 @@ def generate_problems(args):
     generator.add_diagrams(tasks)
     generator.save(args.output)
 
+
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()
 
